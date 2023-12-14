@@ -1,0 +1,32 @@
+<template>
+  <layou-view>
+    <template #header>
+      <div>
+        12121<ehr-date type="daterange" size=""></ehr-date>
+        <ehr-select collectionType="XB"/>
+      </div>
+    </template>
+    <div>
+      <p>测试</p>
+      <label>{{ zjhm }}</label>
+    </div>
+  </layou-view>
+</template>
+
+<script setup lang="ts">
+  import {ref, getCurrentInstance} from 'vue'
+
+  const {proxy} = getCurrentInstance() as any
+
+  let zjhm = ref('12')
+
+  proxy.$http.get('/fis/qyRk/getLsZjHm', null).then((res: any) => {
+    if (res.code == '200') {
+      zjhm.value = res.data
+    }
+  })
+</script>
+
+<style>
+
+</style>
