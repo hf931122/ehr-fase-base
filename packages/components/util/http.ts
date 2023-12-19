@@ -1,7 +1,5 @@
 import axios from 'axios'
 import {message} from 'ant-design-vue'
-//import cryptoJs from 'crypto-js'
-// import  faceConfig from './faceConfig'
 import loading from '../loading/loading.js'
 import signature from './fisSig'
 import uuid from './uuid'
@@ -59,6 +57,10 @@ const http = {
   submit2(method: string, url: string, data?: any, queryParams?: any, header?: any) {
     return sendhttp(method, url, queryParams, data, header)
   },
+  /** 公卫请求；第一个参数在url中，第二个参数在data后面 */
+  submitEhr(method: string, url: string, queryParams?: any, data?: any, header?: any) {
+    return sendhttp(method, faceConfig.ehrPath + url, queryParams, data, header)
+  },
   postFile(url: string, data?: any, queryParams?: any, header?: any) {
     return sendhttp('post', url, queryParams, data, header)
   },
@@ -97,7 +99,7 @@ const http = {
 
 const sendhttp = (method: string, url: string, queryParams?: any, data?: any, headers?: object) => {
   // !headers && (headers = {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'})
-  if (!headers && url.indexOf('/file/uploadFile') == -1) {
+  if (basePath.indexOf('ehrcfis') > -1 && !headers && url.indexOf('/file/uploadFile') == -1) {
     headers = {roletype: 'fis'}
   }
   let responseType = 'json'
@@ -261,7 +263,9 @@ function checkCode (res: any) {
     xhr.setRequestHeader('accessToken', accessToken)
     xhr.setRequestHeader('Access-Control-Max-Age', '1000')
     xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true')
-    url == '/api/area/get' && xhr.setRequestHeader('roletype', 'fis')
+    if (basePath.indexOf('ehrcfis') > -1 && url == '/api/area/get') {
+      xhr.setRequestHeader('roletype', 'fis')
+    }
     if(method.toLowerCase() === "post" && data !== undefined) {
       if (isformData) { // 发送文件
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")

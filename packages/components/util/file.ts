@@ -17,7 +17,6 @@ let file = {
       photoCompress(file, 0.8, (file: any) => {
         if (file.size && file.size > maxSizes) {
           message.error(`上传文件不能大于${maxSize}M`, 3);
-          (window as any).Base.showMask(false)
           return
         }
         this.setUpload(file, dirCode, resId, resType, success)
@@ -26,7 +25,6 @@ let file = {
       // 小于等于1M 原图上传
       if (file.size && file.size > maxSizes) {
         message.error(`上传文件不能大于${maxSize}M`, 3);
-        (window as any).Base.showMask(false)
         return
       }
       this.setUpload(file, dirCode, resId, resType, success)

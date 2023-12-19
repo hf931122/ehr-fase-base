@@ -53,12 +53,13 @@ const refrsh = {
     let timestamp = new Date().getTime()
     let o_tamp = sessionStorage.getItem('outTime')
     sessionStorage.setItem('outTime', timestamp + '')
-    let myWindow = (top as any).window
+    let top_url = (top as any).window.location.href
+    top_url = top_url.replace('index', 'login');
     if (!o_tamp || timestamp - Number(o_tamp) > 30000) {
       message.warning(title)
       setTimeout(() => {
-        sessionStorage.removeItem('ecount')
-        myWindow.location.href = myWindow.location.origin + '/login.html'
+        sessionStorage.removeItem('ecount');
+        (top as any).window.location.href = top_url
       }, 800)
     } else {
       Modal.warning({
@@ -66,8 +67,8 @@ const refrsh = {
         content: '确认跳转认证',
         okText: '确定',
         onOk: () => {
-          sessionStorage.removeItem('ecount')
-          myWindow.location.href = myWindow.location.origin + '/login.html'
+          sessionStorage.removeItem('ecount');
+          (top as any).window.location.href = top_url
         }
       })
     }

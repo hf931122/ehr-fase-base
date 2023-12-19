@@ -4,6 +4,7 @@
       <div>
         12121<ehr-date type="daterange" size=""></ehr-date>
         <ehr-select collectionType="XB"/>
+        <ehr-photo edit></ehr-photo>
       </div>
     </template>
     <div>
@@ -21,7 +22,7 @@
 
   let zjhm = ref('12')
 
-  // allpro?.proxy?.
+  allpro?.proxy?.$http.get('/fis/qyRk/getLsZjHm', null).then()
   proxy.$http.get('/fis/qyRk/getLsZjHm', null).then((res: any) => {
     if (res.code == '200') {
       zjhm.value = res.data

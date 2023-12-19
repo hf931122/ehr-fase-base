@@ -2,6 +2,8 @@ import moment from "moment"
 import { message } from 'ant-design-vue'
 import dict from './dict'
 import {http} from './http'
+import {setMaxDigits} from './Rsa/BigInt.js'
+import {RSAKeyPair, encryptedString} from './Rsa/RSA.js'
 
 const util = {
     checkQuery (areaId: string, keyword: string, len = 4, isLsZjhm = false):any {
@@ -389,32 +391,36 @@ const util = {
         message.warn(result.message || '出现一点小意外，请稍后再试！')
       }
     },
-}
-const checkQuery = util.checkQuery
-const trimForm = util.trimForm
-const dealFrom = util.dealTrimFrom
-const getDictItems = util.getDictItems
-/** 计算页码 */
-const getPageSize = (height?: number, rowHeight?: number) => {
-  height = height || 120
-  rowHeight = rowHeight || 43
-  let all_height:number = Math.min(document.body.clientHeight, document.documentElement.clientHeight)
-  let tbDiv = document.getElementsByClassName('ant-layout-content')[0]
-  if (tbDiv) {
-    let tbHeight = tbDiv.clientHeight
-    all_height = Math.min(all_height, tbHeight)
+    /**
+     * 加密公共方法
+     */
+    encryptedRsa(data: string){
+      setMaxDigits(130)
+      let rsaKey = new RSAKeyPair('10001', '', '906C793510FB049452764740B21B97A51DAEA794AB6E43836269D5E6317D49226C12362BA22DAB5EC3BC79553A8A098B01F3C4D81A87B3EE5BD2F4F1431CC495EE2FE54688B212145BB32D56EEEEE1430CE26234331B291CFC53C9B84FAFFDF0B44371A032880C3D567F588D2CD5FCE28D9CDD2923CB547DAD219A6A1B8B5D3D')
+      return encryptedString(rsaKey, encodeURI(data))
+    },
+    /** 计算页码 */
+  getPageSize (height?: number, rowHeight?: number) {
+    height = height || 120
+    rowHeight = rowHeight || 43
+    let all_height:number = Math.min(document.body.clientHeight, document.documentElement.clientHeight)
+    let tbDiv = document.getElementsByClassName('ant-layout-content')[0]
+    if (tbDiv) {
+      let tbHeight = tbDiv.clientHeight
+      all_height = Math.min(all_height, tbHeight)
+    }
+    let pageSize = Math.floor((all_height - height) / rowHeight)
+    return pageSize > 0 ? pageSize : 10
+  },
+  /** 禁止选择未来日期*/
+  disabledFutureDate (current: any) {
+    return current > moment().endOf('day')
+  },
+  /** 禁止选择过去日期*/
+  disabledPastDate (current: any) {
+    return current < moment().startOf('day')
   }
-  let pageSize = Math.floor((all_height - height) / rowHeight)
-  return pageSize > 0 ? pageSize : 10
 }
-/** 禁止选择未来日期*/
-const disabledFutureDate = (current: any) => {
-  return current > moment().endOf('day')
-}
-/** 禁止选择过去日期*/
- const disabledPastDate = (current: any) => {
-  return current < moment().startOf('day')
-}
-export { checkQuery, trimForm, dealFrom, disabledFutureDate, disabledPastDate, getPageSize, getDictItems }
-
+const getDictItems = util.getDictItems
+export { getDictItems }
 export default util

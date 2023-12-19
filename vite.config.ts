@@ -14,9 +14,10 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      '/images': 'packages/images',
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      packages: fileURLToPath(new URL('./packages', import.meta.url)),
-      lib: fileURLToPath(new URL('./lib', import.meta.url))
+      'packages': fileURLToPath(new URL('./packages', import.meta.url)),
+      'lib': fileURLToPath(new URL('./lib', import.meta.url))
     },
     extensions: [".vue",'.js', '.json', '.ts', '.tsx'],//使用别名省略的后缀名
   },
