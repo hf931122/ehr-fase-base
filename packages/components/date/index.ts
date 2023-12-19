@@ -1,8 +1,8 @@
 import date from './index.vue'
-import type { App } from 'vue'
+import { withInstall } from '../util/install'
 
-date.install = function(Vue: App) {
-  Vue.component(date.name, date)
-}
-export default date
-export const EhrDate = date
+export const EhrDate = withInstall(date)
+export default EhrDate
+export * from './index.vue'
+type EhrDateInstance = InstanceType<typeof date>
+export type { EhrDateInstance }

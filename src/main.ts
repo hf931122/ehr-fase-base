@@ -3,6 +3,7 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import faceConfig from '../src/assets/util/faceConfig'
 
 import Antd from 'ant-design-vue'
 
@@ -13,7 +14,7 @@ import components from './components/index'
 const app = createApp(App)
 
 app.use(Antd)
-app.use(ehrBasic)
+app.use(ehrBasic, faceConfig)
 app.use(components)
 app.use(router)
 

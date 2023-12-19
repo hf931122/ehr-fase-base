@@ -17,9 +17,11 @@
   import {ref, getCurrentInstance} from 'vue'
 
   const {proxy} = getCurrentInstance() as any
+  const allpro = getCurrentInstance()
 
   let zjhm = ref('12')
 
+  // allpro?.proxy?.
   proxy.$http.get('/fis/qyRk/getLsZjHm', null).then((res: any) => {
     if (res.code == '200') {
       zjhm.value = res.data

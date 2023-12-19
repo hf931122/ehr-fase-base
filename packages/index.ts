@@ -8,13 +8,14 @@ import valid from './components/util/valid'
 
 import type { App } from 'vue'
 
-const arry = [{view: ehrDate, name: 'ehrDate'},
-              {view: ehrSelect, name: 'ehrSelect'}]
+const arry = [ehrDate,
+              ehrSelect]
 
-const install = function(Vue: App) {
+const install = function(Vue: App, faceConfig?: any) {
   arry.forEach((item: any) => {
-    Vue.component(item.name, item.view)
+    Vue.component(item.name, item)
   })
+  http.init(faceConfig)
   Vue.config.globalProperties.$http = http
   Vue.config.globalProperties.$util = util
   Vue.config.globalProperties.$valid = valid
@@ -27,4 +28,28 @@ if (typeof window != 'undefined' && window.Vue) {
 
 export default { install }
 
-export * from './components/date'
+import '@vue/runtime-core'
+
+// declare module '@vue/runtime-core' {
+//   // GlobalComponents for Volar
+//   export interface GlobalComponents {
+//     EhrDate: typeof import('./components/date/index.ts')['EhrDate']
+//   }
+
+//   interface ComponentCustomProperties {
+//     $http: typeof import('./components/util/http')
+//     $util: typeof import('./components/util/util')
+//     $valid: typeof import('./components/util/valid')
+//     $flie: typeof import('./components/util/file')
+//   }
+// }
+
+// declare module 'vue' {
+//   export interface GlobalComponents {
+//     EhrDate: typeof ehrDate,
+//     EhrSelect: typeof ehrSelect
+//   }
+// }
+
+// export * from './components/date'
+// export * from './components/select'

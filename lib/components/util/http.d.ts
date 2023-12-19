@@ -1,4 +1,5 @@
 declare const http: {
+    init(urls: any): void;
     /** 第一个参数在data中，第二个参数在url后面 */
     submit(method: string, url: string, data?: any, queryParams?: any, header?: any): Promise<unknown>;
     /** 第一个参数在data中，第二个参数在url后面 */

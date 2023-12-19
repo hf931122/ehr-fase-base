@@ -1,7 +1,7 @@
 <script setup lang="ts">
   // import { DatePicker } from 'iview'
   import { ref, watch } from 'vue'
-  import locale from 'ant-design-vue/es/date-picker/locale/zh_CN'
+  import zhCN from 'ant-design-vue/es/date-picker/locale/zh_CN'
   import moment from 'moment'
   defineOptions({
     name: 'ehrDate'
@@ -18,6 +18,7 @@
     placeholder: {type: String, default: '请输入日期'},
     disabled: {type: Boolean, default: false}
   });
+  const locale = zhCN
   let dateType = ref<string>('date')
   let boolRange = ref<boolean>(false)
   let showTime = ref<boolean>(false)

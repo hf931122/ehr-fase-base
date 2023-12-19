@@ -1,9 +1,12 @@
 import config from './config'
 import {message} from 'ant-design-vue'
-import  faceConfig from './faceConfig'
 import {http} from './http'
 
+let faceConfig: any = {}
 let file = {
+  init (urls: any) {
+    faceConfig = urls
+  },
   // 上传文件
   upload (file: any, dirCode: any, resId: string, resType: string, success: any) {
     let maxSize = config.getValue('MAX_FILE_SIZE')

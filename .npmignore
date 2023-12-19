@@ -6,7 +6,6 @@ packages/
 public/
 node_modules/
 src/
-typings/
 vite/
 
 # 忽略指定文件

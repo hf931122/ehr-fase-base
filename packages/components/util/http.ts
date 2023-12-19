@@ -1,7 +1,8 @@
 import axios from 'axios'
-import {message, Modal} from 'ant-design-vue'
+import {message} from 'ant-design-vue'
 //import cryptoJs from 'crypto-js'
-import  faceConfig from './faceConfig'
+// import  faceConfig from './faceConfig'
+import loading from '../loading/loading.js'
 import signature from './fisSig'
 import uuid from './uuid'
 import Qs from 'qs'
@@ -9,6 +10,7 @@ import refrsh from './refrshToken'
 // axios 配置
 axios.defaults.timeout = 3*60*1000
 // axios.defaults.baseURL = paths.URL
+let faceConfig: any = {}
 let basePath: any = faceConfig.basePath
 axios.defaults.baseURL = faceConfig.basePath
 
@@ -44,6 +46,11 @@ axios.interceptors.response.use(
 )
 
 const http = {
+  init (urls: any) {
+    faceConfig = urls
+    basePath = urls.basePath
+    axios.defaults.baseURL = urls.basePath
+  },
   /** 第一个参数在data中，第二个参数在url后面 */
   submit(method: string, url: string, data?: any, queryParams?: any, header?: any) {
     return sendhttp(method, url, queryParams, header ? Qs.stringify(data) : data, header)
@@ -114,13 +121,14 @@ const sendhttp = (method: string, url: string, queryParams?: any, data?: any, he
     isFormData: false
   }
   const promise = axios(submitParameter);
-  (window as any).Base.showMask(true)
+  let load = new loading()
+  load.init()
   return new Promise((resolve, reject) => {
     return promise.then((response: any) => {
-      (window as any).Base.showMask(false)
+      load.hide()
       return resolve(checkStatus(response.data, submitParameter))
     }, (error: any) => {
-      (window as any).Base.showMask(false)
+      load.hide()
       return reject(checkCode(error))
     })
   })
@@ -254,12 +262,12 @@ function checkCode (res: any) {
     xhr.setRequestHeader('Access-Control-Max-Age', '1000')
     xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true')
     url == '/api/area/get' && xhr.setRequestHeader('roletype', 'fis')
-    xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8")
     if(method.toLowerCase() === "post" && data !== undefined) {
       if (isformData) { // 发送文件
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
         xhr.send(Qs.stringify(data))
       } else {
+        xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8")
         if (typeof data === 'object') {
           try {
             data = JSON.stringify(data)
@@ -268,6 +276,7 @@ function checkCode (res: any) {
         xhr.send(data)
       }
     } else {
+      xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8")
       xhr.send(null)
     }
     xhr.ontimeout = function () {

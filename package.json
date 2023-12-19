@@ -1,15 +1,17 @@
 {
   "name": "ehr-face-base",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "hf",
   "private": false,
   "type": "module",
+  "types": "typings/global.d.ts",
   "main": "lib/ehr-face-base.umd.js",
   "module": "lib/ehr-face-base.es.js",
   "files": [
     "lib/*",
-    "ehr-face-base.d.ts"
+    "typings/global.d.ts"
   ],
+  "Keywords": [],
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
@@ -19,7 +21,9 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@wocwin/t-ui-plus": "^1.2.5",
     "crypto-js": "^4.2.0",
+    "element-plus": "^2.4.4",
     "jsencrypt": "^3.3.2",
     "qs": "^6.11.2",
     "vue": "^3.3.10",
