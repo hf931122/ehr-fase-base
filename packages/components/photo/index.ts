@@ -2,8 +2,8 @@ import photo from './index.vue'
 
 import { withInstall } from '../util/install'
 
-export const EhrPhotot = withInstall(photo)
-export default EhrPhotot
+export const EhrPhoto = withInstall(photo)
+export default EhrPhoto
 export * from './index.vue'
-type EhrPhototInstance = InstanceType<typeof photo>
-export type { EhrPhototInstance }
+type EhrPhotoInstance = InstanceType<typeof photo>
+export type { EhrPhotoInstance }

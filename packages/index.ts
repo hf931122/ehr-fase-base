@@ -1,7 +1,7 @@
 import {http} from './components/util/http'
 import ehrDate from './components/date/index.vue'
 import ehrSelect from './components/select/index.vue'
-import EhrPhotot from './components/photo/index.vue'
+import EhrPhoto from './components/photo/index.vue'
 import EhrUploadList from './components/uploadList/index.vue'
 
 import util from './components/util/util'
@@ -14,7 +14,7 @@ import windowUtil from './components/util/windowUtil'
 
 import type { App } from 'vue'
 
-const arry = [ehrDate, ehrSelect, EhrPhotot, EhrUploadList]
+const arry = [ehrDate, ehrSelect, EhrPhoto, EhrUploadList]
 
 const install = function(Vue: App, faceConfig?: any) {
   arry.forEach((item: any) => {

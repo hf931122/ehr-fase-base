@@ -1,5 +1,5 @@
 {
-  "extends": "@tsconfig/node18/tsconfig.json",
+  "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": [
     "vite.config.*",
     "vitest.config.*",
@@ -14,7 +14,6 @@
     "noImplicitAny": false, //关闭any提示
     "module": "esnext",
     "moduleResolution": "node",
-    "types": ["node",
-    "@wocwin/t-ui-plus/lib/index.d.ts"]
+    "types": ["node"]
   }
 }

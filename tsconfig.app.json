@@ -1,5 +1,5 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "extends": "@vue/tsconfig/tsconfig.node.json",
   "include": [
     "env.d.ts",
     "typings/global.d.ts",
