@@ -1,16 +1,14 @@
-import {http} from './components/util/http'
+import {http} from './util/http'
 import ehrDate from './components/date/index.vue'
 import ehrSelect from './components/select/index.vue'
 import EhrPhoto from './components/photo/index.vue'
 import EhrUploadList from './components/uploadList/index.vue'
 
-import util from './components/util/util'
-import flie from './components/util/file'
-import valid from './components/util/valid'
-import dict from './components/util/dict'
-import cache from './components/util/cache'
-import ui from './components/util/ui'
-import windowUtil from './components/util/windowUtil'
+import util from './util/util'
+import flie from './util/file'
+import valid from './util/valid'
+import dict from './util/dict'
+import cache from './util/cache'
 
 import type { App } from 'vue'
 
@@ -28,8 +26,6 @@ const install = function(Vue: App, faceConfig?: any) {
   Vue.config.globalProperties.$flie = flie
   Vue.config.globalProperties.$dict = dict
   Vue.config.globalProperties.$cache = cache
-  Vue.config.globalProperties.$ui = ui
-  Vue.config.globalProperties.$windowUtil = windowUtil
 }
 
 if (typeof window != 'undefined' && window.Vue) {

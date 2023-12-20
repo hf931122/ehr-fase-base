@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import {ref, computed, watch} from 'vue'
   import { message } from 'ant-design-vue'
-  import {getDictItems} from '../util/util'
-  import {http} from '../util/http'
+  import {getDictItems} from 'packages/util/util'
+  import {http} from 'packages/util/http'
   
   defineOptions({
     name: 'ehrSelect'

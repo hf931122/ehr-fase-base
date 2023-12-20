@@ -1,6 +1,6 @@
 import uploadList from './index.vue'
 
-import { withInstall } from '../util/install'
+import { withInstall } from 'packages/util/install'
 
 export const EhrUploadList = withInstall(uploadList)
 export default EhrUploadList

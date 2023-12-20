@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {message} from 'ant-design-vue'
-import loading from '../loading/loading.js'
+import loading from '../components/dialog/index.vue'
 import signature from './fisSig'
 import uuid from './uuid'
 import Qs from 'qs'
@@ -251,10 +251,14 @@ function checkCode (res: any) {
       url += "?" + formatGetUrl(data)
     }
     refrsh.validTokenTime(url)
+    let full_url = url
+    if (full_url.indexOf('http://') == -1 && full_url.indexOf('https://') == -1) {
+      full_url = basePath + url
+    }
     //3.打开连接
-    xhr.open(method, basePath + url, isAsync)
+    xhr.open(method, full_url, isAsync)
     let accessToken = refrsh.getCookie()
-    if (accessToken && url != '/api/config/get' && url.indexOf('/oauth/refreshToken') == -1) {
+    if (accessToken && url.indexOf('/api/config/get') == -1 && url.indexOf('/oauth/refreshToken') == -1) {
       let accessToken2 = signature.encryptDate(url)
       xhr.setRequestHeader('accessToken2', accessToken2)
       let uuid_str = uuid.created()
@@ -263,7 +267,7 @@ function checkCode (res: any) {
     xhr.setRequestHeader('accessToken', accessToken)
     xhr.setRequestHeader('Access-Control-Max-Age', '1000')
     xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true')
-    if (basePath.indexOf('ehrcfis') > -1 && url == '/api/area/get') {
+    if (basePath.indexOf('ehrcfis') > -1 && url.indexOf('/api/area/get') > -1) {
       xhr.setRequestHeader('roletype', 'fis')
     }
     if(method.toLowerCase() === "post" && data !== undefined) {

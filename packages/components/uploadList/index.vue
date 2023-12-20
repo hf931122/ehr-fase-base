@@ -3,8 +3,8 @@
   import type { UploadProps } from 'ant-design-vue'
   import { Upload, Modal } from 'ant-design-vue'
   import { PlusOutlined, FilePdfOutlined, FileTextOutlined, FileZipOutlined, FileUnknownOutlined, EyeOutlined, DeleteOutlined, DownloadOutlined } from '@ant-design/icons-vue'
-  import config from '../util/config'
-  import files from '../util/file'
+  import config from 'packages/util/config'
+  import files from 'packages/util/file'
 
   defineOptions({
     name: 'ehrUploadList'

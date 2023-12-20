@@ -1,10 +1,10 @@
 {
   "name": "ehr-face-base",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "author": "hf",
   "private": false,
   "type": "module",
-  "types": "typings/global.d.ts",
+  "types": "lib/index.d.ts",
   "main": "lib/ehr-face-base.umd.js",
   "module": "lib/ehr-face-base.es.js",
   "files": [

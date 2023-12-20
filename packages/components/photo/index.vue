@@ -2,9 +2,9 @@
   import {watch, ref} from 'vue'
   import { UploadOutlined } from '@ant-design/icons-vue'
   import { message } from 'ant-design-vue'
-  import config from '../util/config'
-  import files from '../util/file'
-  import { http } from '../util/http'
+  import config from 'packages/util/config'
+  import files from 'packages/util/file'
+  import { http } from 'packages/util/http'
 
   defineOptions({
     name: 'ehrPhoto'

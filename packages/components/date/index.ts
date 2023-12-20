@@ -1,5 +1,5 @@
 import date from './index.vue'
-import { withInstall } from '../util/install'
+import { withInstall } from 'packages/util/install'
 
 export const EhrDate = withInstall(date)
 export default EhrDate
