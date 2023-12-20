@@ -4,12 +4,14 @@
       <div>
         12121<ehr-date type="daterange" size=""></ehr-date>
         <ehr-select collectionType="XB"/>
-        <ehr-photo edit></ehr-photo>
+        
       </div>
     </template>
     <div>
       <p>测试</p>
+      <a-button @click="createZj">生成临时证件号码</a-button>
       <label>{{ zjhm }}</label>
+      <ehr-photo edit></ehr-photo>
     </div>
   </layou-view>
 </template>
@@ -21,13 +23,15 @@
   const allpro = getCurrentInstance()
 
   let zjhm = ref('12')
-
-  allpro?.proxy?.$http.get('/fis/qyRk/getLsZjHm', null).then()
-  proxy.$http.get('/fis/qyRk/getLsZjHm', null).then((res: any) => {
+  
+  const createZj = () => {
+    proxy.$http.get('/fis/qyRk/getLsZjHm', null).then((res: any) => {
     if (res.code == '200') {
       zjhm.value = res.data
     }
   })
+  }
+  
 </script>
 
 <style>
