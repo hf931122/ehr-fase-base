@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {message} from 'ant-design-vue'
-import loading from '../components/dialog/index.vue'
+import loading from './loading/loading.js'
 import signature from './fisSig'
 import uuid from './uuid'
 import Qs from 'qs'
