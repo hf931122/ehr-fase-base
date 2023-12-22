@@ -25,6 +25,7 @@
   let zjhm = ref('12')
   
   const createZj = () => {
+    debugger
     proxy.$http.get('/fis/qyRk/getLsZjHm', null).then((res: any) => {
     if (res.code == '200') {
       zjhm.value = res.data

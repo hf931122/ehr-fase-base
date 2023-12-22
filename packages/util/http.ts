@@ -252,9 +252,7 @@ function checkCode (res: any) {
     }
     refrsh.validTokenTime(url)
     let full_url = url
-    if (full_url.indexOf('http://') == -1 && full_url.indexOf('https://') == -1) {
-      full_url = basePath + url
-    }
+    !full_url.startsWith('http') && (full_url = basePath + url)
     //3.打开连接
     xhr.open(method, full_url, isAsync)
     let accessToken = refrsh.getCookie()

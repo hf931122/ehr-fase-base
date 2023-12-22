@@ -1,3 +1,4 @@
+import './loading.css'
 /**
  * type: loading 的类型，默认1
  * tipLabel: loading 内的文本，默认 loading...
@@ -7,7 +8,7 @@
  */
 function Loading(config = {}) {
     this.type = config.type || 1
-    this.tipLabel = config.tipLabel || ""
+    this.tipLabel = config.tipLabel || "加载中"
     this.wrap = config.wrap || document.body
     this.loadingWrapper = null
 }
@@ -88,7 +89,7 @@ Loading.prototype.createDom = function () {
 
 // 对loading隐藏
 Loading.prototype.hide = function () {
-    this.wrap.removeChild(this.loadingWrapper);
+    this.wrap.removeChild(this.loadingWrapper)
 }
 
 export default Loading
