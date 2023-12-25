@@ -3,8 +3,12 @@ import cache from './cache'
 import {Modal, message} from 'ant-design-vue'
 
 const refrsh = {
+  env: false,
+  init (env = false) {
+    refrsh.env = !!env
+  },
   getCookie (cname = 'token') {
-    if (process.env.NODE_ENV != 'development' && document.cookie !== undefined && document.cookie !== null) {
+    if (!refrsh.env && document.cookie !== undefined && document.cookie !== null) {
       const arr = document.cookie.match(new RegExp('(^| )' + cname + '=([^;]*)(;|$)'))
       if (arr != null) {
         return arr[2]
@@ -19,7 +23,7 @@ const refrsh = {
   },
   getLogin (cname = 'token') {
     let c_token = ''
-    if (process.env.NODE_ENV != 'development' && document.cookie !== undefined && document.cookie !== null) {
+    if (!refrsh.env && document.cookie !== undefined && document.cookie !== null) {
       const arr = document.cookie.match(new RegExp('(^| )' + cname + '=([^;]*)(;|$)'))
       if (arr != null) {
         c_token = arr[2]

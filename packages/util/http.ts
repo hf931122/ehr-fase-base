@@ -48,6 +48,7 @@ const http = {
     faceConfig = urls
     basePath = urls.basePath
     axios.defaults.baseURL = urls.basePath
+    refrsh.init(urls.env)
   },
   /** 第一个参数在data中，第二个参数在url后面 */
   submit(method: string, url: string, data?: any, queryParams?: any, header?: any) {
