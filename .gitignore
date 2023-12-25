@@ -10,10 +10,6 @@ lerna-debug.log*
 node_modules
 .DS_Store
 dist
-<<<<<<< HEAD
-=======
-lib
->>>>>>> 3336e5b... 重新添加文件
 dist-ssr
 coverage
 *.local
