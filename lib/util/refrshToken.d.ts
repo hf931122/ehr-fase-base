@@ -1,4 +1,6 @@
 declare const refrsh: {
+    env: boolean;
+    init(env?: boolean): void;
     getCookie(cname?: string): any;
     getLogin(cname?: string): string;
     remove(title?: string): void;
