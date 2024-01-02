@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import {ref} from 'vue'
   import type { UploadProps } from 'ant-design-vue'
-  import { Upload, Modal } from 'ant-design-vue'
+  import { Modal } from 'ant-design-vue'
   import { PlusOutlined, FilePdfOutlined, FileTextOutlined, FileZipOutlined, FileUnknownOutlined, EyeOutlined, DeleteOutlined, DownloadOutlined } from '@ant-design/icons-vue'
   import config from 'packages/util/config'
   import files from 'packages/util/file'
@@ -40,6 +40,8 @@
         return file.downSrc.split('name')[0]
       }
       return file.url
+    } else if (props.isDownLoad && file.downSrc) {
+      return file.downSrc.split('name')[0]
     }
     return ''
   }
@@ -48,10 +50,12 @@
     let file_name = arr[arr.length - 1]
     return file_name.toLowerCase()
   }
+  /** 是否图片 */
   const isImage = (fileName: string) => {
     const images = ['gif', 'jpg', 'jpeg', 'png']
     return fileName && images.includes(fileExtension(fileName))
   }
+  /** 是否pdf */
   const isPdf = (fileName: string) => {
     return fileExtension(fileName) === 'pdf'
   }
@@ -118,7 +122,7 @@
     } catch (e) {
       console.log(e)
     }
-    return Upload.LIST_IGNORE
+    return false
   } 
 </script>
 
@@ -148,11 +152,11 @@
           <!--预览-->
           <eye-outlined style="font-size: 25px" title="预览" v-if="isImage(file.name) || isPdf(file.name)" @click="handlePreview(file)" />
           <!--下载-->
-          <a v-if="isDocx(file) || isDownLoad" style="font-size: 25px" title="下载" :href="isDocx(file) || file.downSrc.split('name')[0]"><download-outlined @click="downLoadFile(file)" /></a>
+          <a v-if="isDocx(file)" style="font-size: 25px" title="下载" :href="isDocx(file)"><download-outlined @click="downLoadFile(file)" /></a>
           <!--下载-->
-          <a v-if="readonly" style="font-size: 25px" title="下载" :href="file.downSrc.split('name')[0]"><download-outlined @click="downLoadFile(file)" /></a>
+          <a v-if="readonly && file.downSrc" style="font-size: 25px" title="下载" :href="file.downSrc.split('name')[0]"><download-outlined @click="downLoadFile(file)" /></a>
           <!--删除-->
-          <delete-outlined v-else-if="!disabled" style="font-size: 25px" title="删除" @click="handleDelete(file)" />
+          <delete-outlined v-else-if="!disabled && !readonly" style="font-size: 25px" title="删除" @click="handleDelete(file)" />
         </div>
       </div>
     </div>
