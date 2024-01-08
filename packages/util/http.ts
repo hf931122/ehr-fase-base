@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {message} from 'ant-design-vue'
+import {message as umessage} from 'ant-design-vue'
 import loading from './loading/loading.js'
 import signature from './fisSig'
 import uuid from './uuid'
@@ -149,7 +149,7 @@ function checkStatus (response: any, submitParame?: any) {
       ((response.errors[0].errorCode == '403' || response.errors[0].errorCode == '304') && response.errors[0].msg == '未登录')) {
       LogOuts(response.message || response.errors[0].msg)
     } else {
-      message.error(response.errors[0].msg)
+      umessage.error(response.errors[0].msg)
       response.code = 404
       return response
     } 
@@ -160,7 +160,7 @@ function checkStatus (response: any, submitParame?: any) {
   } else if (response && (response.code === 200 || response.code === 304)) {
     return response
   } else {
-    message.warning(response.message)
+    umessage.warning(response.message)
     return response
   }
 }
@@ -230,7 +230,7 @@ function checkCode (res: any) {
       errorMessage: '网络链接错误'
     }
   }
-  message.warning(errorInfo.errorMessage)
+  umessage.warning(errorInfo.errorMessage)
   return errorInfo.errorMessage
 }
 
@@ -287,7 +287,7 @@ function checkCode (res: any) {
       xhr.send(null)
     }
     xhr.ontimeout = function () {
-      message.warning('请求超时！')
+      umessage.warning('请求超时！')
     }
     let res = xhr.responseText
     try { res = JSON.parse(res) } catch (e) { }

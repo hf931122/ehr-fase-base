@@ -1,10 +1,11 @@
 <script setup lang="ts">
   import {ref} from 'vue'
   import type { UploadProps } from 'ant-design-vue'
-  import { Modal } from 'ant-design-vue'
+  // import { Modal } from 'ant-design-vue'
   import { PlusOutlined, FilePdfOutlined, FileTextOutlined, FileZipOutlined, FileUnknownOutlined, EyeOutlined, DeleteOutlined, DownloadOutlined } from '@ant-design/icons-vue'
   import config from 'packages/util/config'
   import files from 'packages/util/file'
+  import modal from 'packages/util/modal/index'
 
   defineOptions({
     name: 'ehrUploadList'
@@ -84,19 +85,20 @@
     previewVisible.value = true
   }
   const handleDelete = (file: any) => {
-    Modal.confirm({
-        title: '确认删除上传的图片或文件吗？',
-        okText: '确定',
-        cancelText: '取消',
-        onOk: () => {
-          emit('update:filelist',
-            props.filelist.filter((item: any) => {
-              return item.uid !== file.uid
-            })
-          )
-          emit('change')
-        }
-      })
+    modal({
+      type: 'confirm',
+      title: '确认删除上传的图片或文件吗？',
+      okText: '确定',
+      cancelText: '取消',
+      onOk: () => {
+        emit('update:filelist',
+          props.filelist.filter((item: any) => {
+            return item.uid !== file.uid
+          })
+        )
+        emit('change')
+      }
+    })
   }
 
   const beforeUpload: UploadProps['beforeUpload'] = (file: any, fileLists: any) => {

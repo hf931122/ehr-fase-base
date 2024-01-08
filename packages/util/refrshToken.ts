@@ -1,6 +1,7 @@
 import {http} from './http'
 import cache from './cache'
-import {Modal, message} from 'ant-design-vue'
+import {message} from 'ant-design-vue'
+import modal from './modal/index'
 
 const refrsh = {
   env: false,
@@ -66,7 +67,8 @@ const refrsh = {
         (top as any).window.location.href = top_url
       }, 800)
     } else {
-      Modal.warning({
+      modal({
+        type: 'waring',
         title: title,
         content: '确认跳转认证',
         okText: '确定',
