@@ -40,6 +40,7 @@ declare const util: {
     disabledFutureDate(current: any): boolean;
     /** 禁止选择过去日期*/
     disabledPastDate(current: any): boolean;
+    base64toFile(dataurl: any, filename?: string): File;
 };
 declare const getDictItems: (code: string, sys?: string, excludes?: any) => any;
 export { getDictItems };
