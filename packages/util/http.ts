@@ -266,7 +266,7 @@ function checkCode (res: any) {
     xhr.setRequestHeader('accessToken', accessToken)
     xhr.setRequestHeader('Access-Control-Max-Age', '1000')
     xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true')
-    if (basePath.indexOf('ehrcfis') > -1 && url.indexOf('/api/area/get') > -1) {
+    if (basePath.indexOf('ehrcfis') > -1 && (url.indexOf('/sys/area/get') > -1 || url.indexOf('/sys/area/getchildren') > -1)) {
       xhr.setRequestHeader('roletype', 'fis')
     }
     if(method.toLowerCase() === "post" && data !== undefined) {
