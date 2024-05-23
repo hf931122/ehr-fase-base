@@ -23,6 +23,7 @@
     accept: {type: String, default: 'image/png, .jpg, .PNG, .JPG, gif, .GIF'},
     src: {type: String, default: ''}, // 传入的显示图片url
     xb: {type: String, default: ''},
+    validFun: {type: Function},
     showReadCard: {type: Boolean, default: false},
     otherParam: {type: Object, default: () => {}},
     upInfo: {type: Object, default: () => { // 保存到文件服务的相关信息
@@ -64,6 +65,9 @@
   setImg()
 
   const beforeUpload = async (file: any)  => {
+    if (props.validFun && !props.validFun()) {
+      return
+    }
     if (!!props.upUrl) {
       await uploadExport(file)
       return false
