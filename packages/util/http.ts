@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {message as umessage} from 'ant-design-vue'
 import loading from './loading/loading.js'
-import signature from './fisSig'
+import anyHPass from './anyHPass'
 import uuid from './uuid'
 import Qs from 'qs'
 import refrsh from './refrshToken'
@@ -20,12 +20,12 @@ axios.interceptors.request.use(
     // config.data={EncryptContent:""}
     // 参数预处理
     let accessToken = refrsh.getCookie()
-    !config.headers.accessToken && accessToken && (config.headers.accessToken = accessToken)
+    !config[ef([7, 4, 0, 3, 4, 29, 17])][ef([0, 2, 2, 4, 17, 17, 57, 14, 10, 4, 13])] && accessToken && (config[ef([7, 4, 0, 3, 4, 29, 17])][ef([0, 2, 2, 4, 17, 17, 57, 14, 10, 4, 13])] = accessToken)
     if (accessToken && config.url != '/api/config/get' && config.url.indexOf('/oauth/refreshToken') == -1) {
-      let accessToken2 = signature.encryptDate(config.url)
-      accessToken2 && (config.headers.accessToken2 = accessToken2)
+      anyHPass.encryptDate(config.url, config[ef([7, 4, 0, 3, 4, 29, 17])])
+      config[ef([7, 4, 0, 3, 4, 29, 17])][ef([0, 2, 2, 4, 17, 17, 57, 14, 10, 4, 13, 67])] = ''
       let uuid_str = uuid.created()
-      uuid_str && (config.headers.imei = uuid_str)
+      uuid_str && (config[ef([7, 4, 0, 3, 4, 29, 17])][ef([8, 12, 4, 8])] = uuid_str)
     }
     return config
   },
@@ -113,16 +113,16 @@ const sendhttp = (method: string, url: string, queryParams?: any, data?: any, he
     delete queryParams.responseType
   }
   refrsh.validTokenTime(url)
-  const submitParameter = {
+  const submitParameter: any = {
     method,
     url,
     params: queryParams, // get请求，参数
     data: data,
-    headers,
     responseType: responseType, // 默认的
     withCredentials: true, // 默认的
     isFormData: false
   }
+  submitParameter[ef([7, 4, 0, 3, 4, 29, 17])] = headers
   const promise = axios(submitParameter);
   let load = new loading()
   load.init()
@@ -258,12 +258,16 @@ function checkCode (res: any) {
     xhr.open(method, full_url, isAsync)
     let accessToken = refrsh.getCookie()
     if (accessToken && url.indexOf('/api/config/get') == -1 && url.indexOf('/oauth/refreshToken') == -1) {
-      let accessToken2 = signature.encryptDate(url)
-      xhr.setRequestHeader('accessToken2', accessToken2)
+      let h_param: any = {}
+      anyHPass.encryptDate(url, h_param)
+      for (const key in h_param) {
+        xhr.setRequestHeader(key, h_param[key])
+      }
+      xhr.setRequestHeader(ef([0, 2, 2, 4, 17, 17, 57, 14, 10, 4, 13, 67]), '')
       let uuid_str = uuid.created()
-      xhr.setRequestHeader('imei', uuid_str)
+      xhr.setRequestHeader(ef([8, 12, 4, 8]), uuid_str)
     }
-    xhr.setRequestHeader('accessToken', accessToken)
+    xhr.setRequestHeader(ef([0, 2, 2, 4, 17, 17, 57, 14, 10, 4, 13]), accessToken)
     xhr.setRequestHeader('Access-Control-Max-Age', '1000')
     xhr.setRequestHeader('Access-Control-Allow-Credentials', 'true')
     if (basePath.indexOf('ehrcfis') > -1 && (url.indexOf('/sys/area/get') > -1 || url.indexOf('/sys/area/getchildren') > -1)) {

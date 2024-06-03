@@ -18,7 +18,7 @@ const refrsh = {
     } else {
       let login = localStorage.getItem('login')
       let bean = login ? JSON.parse(login) : ''
-      let accessToken = bean ? bean.accessToken : ''
+      let accessToken = bean ? bean[ef([0, 2, 2, 4, 17, 17, 57, 14, 10, 4, 13])] : ''
       return accessToken
     }
   },
@@ -99,7 +99,7 @@ const refrsh = {
         delete result.data.ticket
         delete result.data.userVO
         this.setLogin(Object.assign({}, bean, result.data))
-        this.setCookie(result.data.accessToken)
+        this.setCookie(result.data[ef([0, 2, 2, 4, 17, 17, 57, 14, 10, 4, 13])])
         setTimeout(() => {
           this.countRefresfTime()
         }, 10)
@@ -142,7 +142,7 @@ const refrsh = {
         delete res.data.ticket
         delete res.data.userVO
         this.setLogin(Object.assign({}, bean, res.data))
-        this.setCookie(res.data.accessToken)
+        this.setCookie(res.data[ef([0, 2, 2, 4, 17, 17, 57, 14, 10, 4, 13])])
         setTimeout(() => {
           this.countRefresfTime()
         }, 10)
