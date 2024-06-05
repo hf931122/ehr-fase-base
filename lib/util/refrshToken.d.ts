@@ -5,6 +5,7 @@ declare const refrsh: {
     getLogin(cname?: string): string;
     remove(title?: string): void;
     outLogin(title?: string): void;
+    outInLogin(title: string, des: string, url: string): void;
     validTokenTime(url: string): void;
     countRefresfTime(): void;
     refreshTokens(): void;

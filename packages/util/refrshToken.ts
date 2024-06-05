@@ -61,23 +61,30 @@ const refrsh = {
     let top_url = (top as any).window.location.href
     top_url = top_url.replace('index', 'login');
     if (!o_tamp || timestamp - Number(o_tamp) > 30000) {
+      if (title.indexOf('当前账号被挤出') > -1) {
+        this.outInLogin(title, '退出登录', top_url)
+        return
+      }
       message.warning(title)
       setTimeout(() => {
         sessionStorage.removeItem('ecount');
         (top as any).window.location.href = top_url
       }, 800)
     } else {
-      modal({
-        type: 'waring',
-        title: title,
-        content: '确认跳转认证',
-        okText: '确定',
-        onOk: () => {
-          sessionStorage.removeItem('ecount');
-          (top as any).window.location.href = top_url
-        }
-      })
+      this.outInLogin(title, '确认跳转认证', top_url)
     }
+  },
+  outInLogin (title: string, des: string, url: string) {
+    modal({
+      type: 'waring',
+      title: title,
+      content: des,
+      okText: '确定',
+      onOk: () => {
+        sessionStorage.removeItem('ecount');
+        (top as any).window.location.href = url
+      }
+    })
   },
   validTokenTime (url: string) {
     let login = localStorage.getItem('login')
