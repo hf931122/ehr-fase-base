@@ -51,6 +51,10 @@ const refrsh = {
   },
   outLogin (title = '登录过期') {
     let p_count = sessionStorage.getItem('ecount')
+    if (title.indexOf('当前账号被挤出') > -1) {
+      this.outInLogin(title, '退出登录', top_url)
+      return
+    }
     if (p_count) {
       return
     }
@@ -61,10 +65,6 @@ const refrsh = {
     let top_url = (top as any).window.location.href
     top_url = top_url.replace('index', 'login');
     if (!o_tamp || timestamp - Number(o_tamp) > 30000) {
-      if (title.indexOf('当前账号被挤出') > -1) {
-        this.outInLogin(title, '退出登录', top_url)
-        return
-      }
       message.warning(title)
       setTimeout(() => {
         sessionStorage.removeItem('ecount');
