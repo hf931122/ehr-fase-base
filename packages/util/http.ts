@@ -310,7 +310,7 @@ function formatGetUrl(data: any) {
   return ret
 }
 function LogOuts (title?: string) {
-  refrsh.remove(title || '登录过期')
+  refrsh.outLogin(title || '登录过期')
 }
 export {http}
 

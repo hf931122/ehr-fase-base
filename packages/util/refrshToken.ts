@@ -37,7 +37,7 @@ const refrsh = {
     }
     return ''
   },
-  remove (title?: string) {
+  remove () {
     let date = new Date()
     date.setTime(date.getTime() + (-1 * 1000))
     let expires = 'expires=' + date.toUTCString()
@@ -47,10 +47,11 @@ const refrsh = {
     // document.cookie = 'sid=; ' + expires + '; path=/'
     document.cookie = 'token=; ' + expires + '; path=/'
     localStorage.removeItem('login')
-    this.outLogin(title)
   },
   outLogin (title = '登录过期') {
     let p_count = sessionStorage.getItem('ecount')
+    let top_url = (top as any).window.location.href
+    top_url = top_url.replace('index', 'login');
     if (title.indexOf('当前账号被挤出') > -1) {
       this.outInLogin(title, '退出登录', top_url)
       return
@@ -62,11 +63,10 @@ const refrsh = {
     let timestamp = new Date().getTime()
     let o_tamp = sessionStorage.getItem('outTime')
     sessionStorage.setItem('outTime', timestamp + '')
-    let top_url = (top as any).window.location.href
-    top_url = top_url.replace('index', 'login');
     if (!o_tamp || timestamp - Number(o_tamp) > 30000) {
       message.warning(title)
       setTimeout(() => {
+        this.remove()
         sessionStorage.removeItem('ecount');
         (top as any).window.location.href = top_url
       }, 800)
@@ -81,6 +81,7 @@ const refrsh = {
       content: des,
       okText: '确定',
       onOk: () => {
+        this.remove()
         sessionStorage.removeItem('ecount');
         (top as any).window.location.href = url
       }
@@ -124,7 +125,7 @@ const refrsh = {
     let timestamp = bean.timestamp
     let count_time = Math.min(token_time, refresh_time)
     if (count_time <= 0) {
-      this.remove()
+      this.outLogin()
       return
     }
     let timestr = new Date().getTime()

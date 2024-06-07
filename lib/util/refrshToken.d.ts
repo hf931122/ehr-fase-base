@@ -3,7 +3,7 @@ declare const refrsh: {
     init(env?: boolean): void;
     getCookie(cname?: string): any;
     getLogin(cname?: string): string;
-    remove(title?: string): void;
+    remove(): void;
     outLogin(title?: string): void;
     outInLogin(title: string, des: string, url: string): void;
     validTokenTime(url: string): void;
