@@ -99,7 +99,7 @@ const refrsh = {
     count_time = count_time < 0 ? 600 : count_time
     let timestamp = bean.timestamp
     let timestr = new Date().getTime()
-    let stamp_cont = count_time * 1000 - (timestr - timestamp)
+    let stamp_cont = count_time * 500 - (timestr - timestamp)
     if (stamp_cont < 8000 && url.indexOf('/oauth/refreshToken') == -1) {
       let param = {refreshToken: bean.refreshToken}
       let result = http.ajax('post', '/oauth/refreshToken', param, false)
@@ -108,9 +108,6 @@ const refrsh = {
         delete result.data.userVO
         this.setLogin(Object.assign({}, bean, result.data))
         this.setCookie(result.data[ef([0, 2, 2, 4, 17, 17, 57, 14, 10, 4, 13])])
-        setTimeout(() => {
-          this.countRefresfTime()
-        }, 10)
       }
     }
   },
