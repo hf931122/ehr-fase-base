@@ -1,7 +1,7 @@
 declare const _default: {
-    enHyPass(_0x32d7f1: any, _0x6b239c: any): void;
-    splitUrl(_0x16a94d: any): any;
-    enPassR(_0x341161: any, _0x22d0f2: any): any;
-    enPassD(_0x5671a6: any, _0x3b7c68: any, _0x3b7955: any): any;
+    enHyPass(_0x512f1f: any, _0x239f85: any): void;
+    splitUrl(_0xd6d1b5: any): any;
+    enPassR(_0x5e8ec2: any, _0x2294b8: any): any;
+    enPassD(_0x4000a8: any, _0x33e58e: any, _0x26af4d: any): any;
 };
 export default _default;
