@@ -100,7 +100,8 @@ const refrsh = {
     let timestamp = bean.timestamp
     let timestr = new Date().getTime()
     let stamp_cont = count_time * 500 - (timestr - timestamp)
-    if (stamp_cont < 8000 && url.indexOf('/oauth/refreshToken') == -1) {
+    const is_outtime = count_time * 1000 >= (timestr - timestamp)
+    if (stamp_cont < 8000 && url.indexOf('/oauth/refreshToken') == -1 && is_outtime) {
       let param = {refreshToken: bean.refreshToken}
       let result = http.ajax('post', '/oauth/refreshToken', param, false)
       if (result.code == '200' && result.data) {
