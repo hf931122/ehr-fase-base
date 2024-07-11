@@ -88,12 +88,12 @@
     return false
   }
   const uploadExport = async (file: any) => { // 文件不是上传到文件服务时
-      let maxSize = await config.getValue('MAX_FILE_SIZE')
-      let maxSizes = maxSize * 1024 * 1024
-      if (file.size && file.size > maxSizes) {
-        message.error(`上传文件不能大于${maxSize}M`, 3)
-        return
-      }
+      // let maxSize = await config.getValue('MAX_FILE_SIZE')
+      // let maxSizes = maxSize * 1024 * 1024
+      // if (file.size && file.size > maxSizes) {
+      //   message.error(`上传文件不能大于${maxSize}M`, 3)
+      //   return
+      // }
       let form = new FormData()
       form.append('file', file)
       if (props.otherParam && Object.keys(props.otherParam).length > 0) {
