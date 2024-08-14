@@ -7,7 +7,7 @@ declare const http: {
     /** 公卫请求；第一个参数在url中，第二个参数在data后面 */
     submitEhr(method: string, url: string, queryParams?: any, data?: any, header?: any): Promise<unknown>;
     postFile(url: string, data?: any, queryParams?: any, header?: any): Promise<unknown>;
-    ajax(method: string, url: string, data: any, isAsync?: boolean, isformData?: boolean): any;
+    ajax(method: string, url: string, data: any, isAsync?: boolean, isformData?: boolean, isEhr?: boolean): any;
     get(url: string, params: any): Promise<unknown>;
     del(url: string, params: any, data?: object): Promise<unknown>;
     post(url: string, data?: object): Promise<unknown>;

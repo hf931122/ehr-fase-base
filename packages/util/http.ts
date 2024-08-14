@@ -65,8 +65,8 @@ const http = {
   postFile(url: string, data?: any, queryParams?: any, header?: any) {
     return sendhttp('post', url, queryParams, data, header)
   },
-  ajax(method: string, url: string, data: any, isAsync = false, isformData = false) {
-    return sendAjax(url, method, data, isAsync, isformData)
+  ajax(method: string, url: string, data: any, isAsync = false, isformData = false, isEhr = false) {
+    return sendAjax(url, method, data, isAsync, isformData, isEhr)
   },
   get (url: string, params: any) {
     return sendhttp('get', url, params, undefined)
@@ -237,7 +237,7 @@ function checkCode (res: any) {
 /**
  * http请求方法; isAsync = true, 默认异步请求, post提交文件isformData，传true
  * */
- function sendAjax(url: string, method: string, data: any, isAsync = true, isformData = false) {
+ function sendAjax(url: string, method: string, data: any, isAsync = true, isformData = false, isEhr = false) {
   // return new Promise(function(resolve, reject) {
     if (!window.XMLHttpRequest) {
       return {code: 500, data: '请求创建失败！'}
@@ -253,7 +253,9 @@ function checkCode (res: any) {
     }
     refrsh.validTokenTime(url)
     let full_url = url
-    !full_url.startsWith('http') && (full_url = basePath + url)
+    if (!full_url.startsWith('http')) {
+      full_url = isEhr ?  (faceConfig.ehrPath + url) : (basePath + url)
+    }
     //3.打开连接
     xhr.open(method, full_url, isAsync)
     let accessToken = refrsh.getCookie()

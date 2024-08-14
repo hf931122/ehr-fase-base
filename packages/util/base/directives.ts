@@ -1,3 +1,5 @@
+import moment from "moment"
+import {getOnlineUser} from '../config'
 function getIndex(inputs: any, ctlI: any, cons: any): any {
   let isShow = inputs[ctlI].clientHeight && inputs[ctlI].clientWidth
   if (!isShow) {
@@ -40,7 +42,7 @@ function setHous(binding: any, ev: any, inputs: any) {
  * ```
  */
 export default (Vue: any) => {
-	Vue.directive('enter', {
+	Vue.directive('benter', {
     mounted: function (el: any, binding: any) {
 			const list = el.querySelectorAll('.ant-input, .ant-input-number-input, .ant-select-selection-search-input'), inputs: any = []
 			for (let i = 0; i < list.length; i++) {
@@ -76,7 +78,7 @@ export default (Vue: any) => {
 		}
   }),
 	// Vue 定义自定义指令:防止按钮重复提交
-	Vue.directive('preventOnce', {
+	Vue.directive('bpreventOnce', {
 		mounted (el: any, binding: any) {
 			el.addEventListener('click', () => {
 				if (!el.disabled) {
@@ -87,7 +89,58 @@ export default (Vue: any) => {
 				}
 			})
 		}
+	}),
+  // 水印
+	Vue.directive('watermark', {
+		mounted (el: any, binding: any) {
+			// 获取水印文字
+			const online = getOnlineUser()
+			const maxL = Math.max(online.orgName.length, online.areaName.length, online.name.length) * 16
+			let can = document.createElement('canvas')
+			let cans: any = can.getContext('2d')
+			// 设置canvas画布大小
+			can.width = Math.max(330, maxL)
+			can.height = 200
+
+			// 设置水印样式
+			cans.rotate(-25 * Math.PI / 180) // 水印旋转角度
+			// cans.rotate(-20) // 水印旋转角度
+			cans.font = '15px Vedana'
+			cans.fillStyle = '#666666'
+			cans.textAlign = 'left'
+			cans.textBaseline = 'Middle'
+			const topH = 70
+			// cans.fillText(online.name, 0, topH + 20) // 水印在画布的位置x，y轴
+			// if (online.orgAreaName.length < )
+			const ofWidth = -40
+			cans.fillText(moment().format('YYYY-MM-DD'), ofWidth, topH + 50) // online.userId
+			cans.fillText(online.orgName, ofWidth, topH + 80) // online.orgName 四川省健康档案云平台
+			cans.fillText(online.name + ' ( ' + online.loginId + ' ) ', ofWidth, topH + 110)
+
+			let div = document.createElement('div')
+			div.style.pointerEvents = 'none'
+			div.style.top = '15px'
+			div.style.left = '0px'
+			div.style.opacity = '0.1'
+			div.style.position = 'absolute'
+			div.style.zIndex = '99'
+			div.style.width = el.clientWidth + 'px'
+			div.style.height = (el.clientHeight - 15) + 'px' // document.documentElement.clientHeight + 'px'
+			div.style.background = 'url(' + can.toDataURL('image/png') + ') left top repeat'
+			el.appendChild(div)
+			
+			const handleResize = () => {
+				div.style.width = el.clientWidth + 'px'
+				div.style.height = (el.clientHeight - 15) + 'px'
+			}
+			el._handleResize = handleResize
+			window.addEventListener('resize', handleResize)
+		},
+		beforeUnmount (el: any) {
+			window.removeEventListener('resize', el._handleResize)
+		}
 	})
+}
 }
 /*
 1、bind：只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
