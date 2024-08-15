@@ -9,6 +9,7 @@ import flie from './util/file'
 import valid from './util/valid'
 import dict from './util/dict'
 import cache from './util/cache'
+import myDirective from './util/base/directives'
 
 import type { App } from 'vue'
 
@@ -20,6 +21,7 @@ const install = function(Vue: App, faceConfig?: any) {
   })
   http.init(faceConfig)
   flie.init(faceConfig)
+  myDirective(Vue)
   Vue.config.globalProperties.$http = http
   Vue.config.globalProperties.$util = util
   Vue.config.globalProperties.$valid = valid
