@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {message as umessage} from 'ant-design-vue'
+import { message as umessage, message } from 'ant-design-vue';
 import loading from './loading/loading.js'
 import anyHPass from './anyHPass'
 import uuid from './uuid'
@@ -147,7 +147,7 @@ function checkStatus (response: any, submitParame?: any) {
     if ((response.errors[0].errorCode == '302' && response.errors[0].msg == 'session失效') ||
       (response.errors[0].errorCode == '403' && response.errors[0].msg == 'token失效') ||
       ((response.errors[0].errorCode == '403' || response.errors[0].errorCode == '304') && response.errors[0].msg == '未登录')) {
-      LogOuts(response.message || response.errors[0].msg)
+      LogOuts(response)
     } else {
       umessage.error(response.errors[0].msg)
       response.code = 404
@@ -155,7 +155,7 @@ function checkStatus (response: any, submitParame?: any) {
     } 
   } else if (response && (response.code === 401 || response.code === 403 || response.code === 302 ||
     (response.code === 200 && response.errors && response.errors && response.errors.errorCode === 403))) {
-      LogOuts(response.message || response.errors[0].msg)
+      LogOuts(response)
     return {code: 403}
   } else if (response && (response.code === 200 || response.code === 304)) {
     return response
@@ -182,10 +182,13 @@ function checkCode (res: any) {
         break
       case 401:
         errorInfo = {
+          code: '302',
+          data: '',
+          message: '当前用户没有权限',
           errorStatus: 401,
           errorMessage: '当前用户没有权限'
         }
-        LogOuts()
+        LogOuts(errorInfo)
         break
       case 403:
         errorInfo = {
@@ -311,8 +314,8 @@ function formatGetUrl(data: any) {
   }
   return ret
 }
-function LogOuts (title?: string) {
-  refrsh.outLogin(title || '登录过期')
+function LogOuts (data: any) {
+  refrsh.outLogin(data)
 }
 export {http}
 

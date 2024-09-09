@@ -4,7 +4,7 @@ declare const refrsh: {
     getCookie(cname?: string): any;
     getLogin(cname?: string): string;
     remove(): void;
-    outLogin(title?: string): void;
+    outLogin(data: any): void;
     outInLogin(title: string, des: string, url: string): void;
     validTokenTime(url: string): void;
     countRefresfTime(): void;

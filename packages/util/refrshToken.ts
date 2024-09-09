@@ -48,7 +48,15 @@ const refrsh = {
     document.cookie = 'token=; ' + expires + '; path=/'
     localStorage.removeItem('login')
   },
-  outLogin (title = '登录过期') {
+  outLogin (data: any) {
+    let title = data.message || '登录过期'
+    if (window != window.top) {
+      window.top.postMessage({
+        handle: 'outLogin',
+        params: data
+      }, '*')
+      return
+    }
     let p_count = sessionStorage.getItem('ecount')
     let top_url = (top as any).window.location.href
     top_url = top_url.replace('index', 'login');
