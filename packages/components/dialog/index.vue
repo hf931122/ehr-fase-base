@@ -1,8 +1,6 @@
 <script lang="ts" setup>
   import { getCurrentInstance, markRaw, nextTick, watch, ref} from 'vue'
   import zhCN from 'ant-design-vue/es/locale/zh_CN'
-  import dayjs from 'dayjs'
-  import 'dayjs/locale/zh-cn'
 
   import { message } from 'ant-design-vue'
 
