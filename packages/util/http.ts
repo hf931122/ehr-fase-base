@@ -8,7 +8,7 @@ import refrsh from './refrshToken'
 // axios 配置
 axios.defaults.timeout = 3*60*1000
 // axios.defaults.baseURL = paths.URL
-let faceConfig: any = {}
+let faceConfig: any = {}, a_count: number = 0, dialog: any, diaurl: any = null
 let basePath: any = faceConfig.basePath
 axios.defaults.baseURL = faceConfig.basePath
 
@@ -46,6 +46,8 @@ axios.interceptors.response.use(
 const http = {
   init (urls: any) {
     faceConfig = urls
+    urls.dialog && (dialog = urls.dialog)
+    diaurl = urls.diaurl
     basePath = urls.basePath
     axios.defaults.baseURL = urls.basePath
     refrsh.init(urls.env)
@@ -132,9 +134,26 @@ const sendhttp = (method: string, url: string, queryParams?: any, data?: any, he
       return resolve(checkStatus(response.data, submitParameter))
     }, (error: any) => {
       load.hide()
+      if (error.response?.status == '468') { // text/html; application/json
+        openIframe()
+        return
+      }
       return reject(checkCode(error))
     })
   })
+}
+
+function openIframe () {
+  if (a_count > 0 || !dialog) {
+    !dialog && umessage.warning('请联系开发人员检测系统弹窗！')
+    return
+  }
+  a_count++
+  let url = basePath + '/html/safe.html' // location.origin + location.pathname + '#/validPeople'
+  dialog.open(diaurl, {index: true, url: url}, {title: '提示', footer: false, width: '500px',
+    onClose: () => {
+      a_count = 0
+    }})
 }
 
 //返回data信息
@@ -299,6 +318,14 @@ function checkCode (res: any) {
       umessage.warning('请求超时！')
     }
     let res = xhr.responseText
+    if (res.startsWith('<html')) {
+      openIframe()
+      return {
+        code: '500',
+        data: null,
+        message: '用户操作检测！'
+      }
+    }
     try { res = JSON.parse(res) } catch (e) { }
     return checkStatus(res)
 }
