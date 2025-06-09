@@ -3,8 +3,7 @@
 declare module 'qs'
 declare module 'axios'
 declare module 'moment'
-declare module 'crypto-js'
-declare module 'jsencrypt'
+declare module 'ehr-safety'
 declare module '*.js'
 declare module '*.json'
 
