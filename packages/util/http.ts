@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { message as umessage, message } from 'ant-design-vue';
 import loading from './loading/loading.js'
-import {anyHPass} from 'ehr-safety'
+import {safPass} from 'ehr-safety'
 import uuid from './uuid'
 import Qs from 'qs'
 import refrsh from './refrshToken'
@@ -22,7 +22,13 @@ axios.interceptors.request.use(
     let accessToken = refrsh.getCookie()
     !config[ef([7, 4, 0, 3, 4, 29, 17])][ef([0, 2, 2, 4, 17, 17, 57, 14, 10, 4, 13])] && accessToken && (config[ef([7, 4, 0, 3, 4, 29, 17])][ef([0, 2, 2, 4, 17, 17, 57, 14, 10, 4, 13])] = accessToken)
     if (accessToken && config.url != '/api/config/get' && config.url.indexOf('/oauth/refreshToken') == -1) {
-      anyHPass.enHyPass(config.url, config[ef([7, 4, 0, 3, 4, 29, 17])], config[ef([12, 4, 18, 7, 14, 3])])
+      let u_url = config.url
+      if (config.baseURL && !config.url.startsWith('/') && !config.baseURL.endsWith('/')) {
+        u_url = config.baseURL + '/' + config.url
+      } else {
+        u_url = config.baseURL + config.url
+      }
+      safPass.ensafPass(u_url, config[ef([7, 4, 0, 3, 4, 29, 17])], config[ef([12, 4, 18, 7, 14, 3])])
       config[ef([7, 4, 0, 3, 4, 29, 17])][ef([0, 2, 2, 4, 17, 17, 57, 14, 10, 4, 13, 67])] = ''
       let uuid_str = uuid.created()
       uuid_str && (config[ef([7, 4, 0, 3, 4, 29, 17])][ef([8, 12, 4, 8])] = uuid_str)
@@ -283,7 +289,7 @@ function checkCode (res: any) {
     let accessToken = refrsh.getCookie()
     if (accessToken && url.indexOf('/api/config/get') == -1 && url.indexOf('/oauth/refreshToken') == -1) {
       let h_param: any = {}
-      anyHPass.enHyPass(url, h_param, method)
+      safPass.ensafPass(url, h_param, method)
       for (const key in h_param) {
         xhr.setRequestHeader(key, h_param[key])
       }
