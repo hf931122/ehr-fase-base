@@ -30,7 +30,7 @@
 
   const downLoadFile = (file: any) => {
     emit('download', file)
-    if (file.url.indexOf('train.scwjxx.cn:99') == -1 && file.url.indexOf('ehr.scwjxx.cn') == -1 && file.url.indexOf('11.0.32.112:99') == -1) {
+    if (file.url && file.url.indexOf('train.scwjxx.cn:99') == -1 && file.url.indexOf('ehr.scwjxx.cn') == -1 && file.url.indexOf('11.0.32.112:99') == -1) {
       window.open(file.url)
     }
     //
@@ -58,7 +58,7 @@
   }
   /** 是否pdf */
   const isPdf = (fileName: string) => {
-    return fileExtension(fileName) === 'pdf'
+    return fileName && fileExtension(fileName) === 'pdf'
   }
   const handleCancelPreview = () => {
     previewVisible.value = false

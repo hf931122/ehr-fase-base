@@ -1,6 +1,6 @@
 {
   "name": "ehr-face-base",
-  "version": "0.0.55",
+  "version": "0.0.56",
   "author": "hf",
   "private": false,
   "type": "module",
@@ -24,7 +24,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "ehr-safety": "^1.0.1",
+    "ehr-safety": "latest",
     "qs": "^6.11.2"
   },
   "devDependencies": {
