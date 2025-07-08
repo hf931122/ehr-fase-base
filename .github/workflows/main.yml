@@ -4,27 +4,48 @@ on:
   push:
     branches:
       - master
+    workflow_dispatch:  # 添加手动触发配置（无参数）
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
+    # 指定运行环境：使用最新的 Ubuntu 系统
+    permissions:
+      contents: read
+      packages: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
+        # 第一步：检出代码
+        # 使用 GitHub 官方的 checkout action
+        # 将仓库代码下载到工作目录
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: 16.13.2
-      - run: npm install
-      - run: npm run build-only
+          node-version: '16.13.2'
+          registry-url: 'https://registry.npmjs.org'
+        # 第二步：设置 Node.js 环境
+        # 安装 Node.js 16 版本
+        # 配置 npm 使用官方仓库
 
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16.13.2
-          registry-url: https://registry.npmjs.org/
-      - run: npm publish
+      - name: Install dependencies
+        run: npm ci
+        # 第三步：安装依赖
+        # 使用 npm ci 而不是 npm install
+        # npm ci 会严格按照 package-lock.json 安装依赖，更可靠
+
+      - name: Build
+        run: npm run build-only
+        # 第四步：构建项目
+        # 执行 package.json 中定义的 build 脚本
+        # 使用 rollup 打包代码到 dist 目录
+
+      - name: Publish to NPM
+        if: success()
+        run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{secrets.HF}}
+          NODE_AUTH_TOKEN: ${{ secrets.HF }}
+        # 第六步：发布到 NPM
+        # 只有在之前所有步骤都成功时才执行
+        # 使用 NPM_TOKEN 进行身份验证
+        # --access public 表示这是一个公开的包
