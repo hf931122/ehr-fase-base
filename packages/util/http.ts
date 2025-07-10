@@ -289,7 +289,7 @@ function checkCode (res: any) {
     let accessToken = refrsh.getCookie()
     if (accessToken && url.indexOf('/api/config/get') == -1 && url.indexOf('/oauth/refreshToken') == -1) {
       let h_param: any = {}
-      safPass.ensafPass(url, h_param, method)
+      safPass.ensafPass(full_url, h_param, method)
       for (const key in h_param) {
         xhr.setRequestHeader(key, h_param[key])
       }
