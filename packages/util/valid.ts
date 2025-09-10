@@ -47,7 +47,7 @@ const valid = {
       return Promise.resolve()
     } else if (str.test(value)) {
       return Promise.resolve()
-    } else if (this.hasX(value, 4, '=')) {
+    } else if (valid.hasX(value, 4, '=')) {
       return Promise.resolve()
     }
     return Promise.reject('请输入正确的电话号码！')
@@ -165,7 +165,7 @@ const valid = {
       if (!space_str.test(value)) {
         return Promise.reject('前后不能有空格！')
       }
-      if (this.hasX(value)) {
+      if (valid.hasX(value)) {
         return Promise.resolve()
       }
       if (str.test(value)) {
@@ -188,7 +188,7 @@ const valid = {
       if (access != undefined && access === false) {
         return Promise.resolve()
       }
-      if (this.hasX(value, 4, '=')) {
+      if (valid.hasX(value, 4, '=')) {
         return Promise.resolve()
       } else {
         if (value.length != 18) {
