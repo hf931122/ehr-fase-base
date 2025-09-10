@@ -1,6 +1,12 @@
 import util from './util'
 
 const valid = {
+  hasX (str: string, len = 1, match = '>=') {
+    if (match == '=') {
+      return !!str && (str.match(/\*/g) || []).length == len
+    }
+    return !!str && (str.match(/\*/g) || []).length >= len
+  },
   validateCode (rule: any, value: any, callback: any) {
     const str = /^[0-9_#a-zA-Z]+$/ //  /^\w+$/  \s 空格
     if (value === '' || value === null || value === undefined) {
@@ -40,6 +46,8 @@ const valid = {
     } else if (value == '无' || value == '不详') {
       return Promise.resolve()
     } else if (str.test(value)) {
+      return Promise.resolve()
+    } else if (this.hasX(value, 4, '=')) {
       return Promise.resolve()
     }
     return Promise.reject('请输入正确的电话号码！')
@@ -157,6 +165,9 @@ const valid = {
       if (!space_str.test(value)) {
         return Promise.reject('前后不能有空格！')
       }
+      if (this.hasX(value)) {
+        return Promise.resolve()
+      }
       if (str.test(value)) {
         return Promise.resolve()
       }
@@ -177,7 +188,7 @@ const valid = {
       if (access != undefined && access === false) {
         return Promise.resolve()
       }
-      if (!value) {
+      if (this.hasX(value, 4, '=')) {
         return Promise.resolve()
       } else {
         if (value.length != 18) {
